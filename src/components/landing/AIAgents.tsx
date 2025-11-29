@@ -10,7 +10,7 @@ export interface AIAgent {
 }
 
 interface AIAgentsProps {
-  badge?: string
+  // badge?: string
   title?: string
   subtitle?: string
   agents?: AIAgent[]
@@ -60,7 +60,7 @@ const colorClasses = {
 }
 
 export function AIAgents({
-  badge = "Gemini 2.0 Flash",
+  // badge = "Gemini 2.0 Flash",
   title = "Autonomous Commerce Agents",
   subtitle = "Delegate the busywork. Our AI agents handle invoicing, retention, and analytics 24/7.",
   agents = defaultAgents,
@@ -83,11 +83,6 @@ export function AIAgents({
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          {badge && (
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded text-[#C3FF32] text-xs font-bold uppercase tracking-wider mb-6 border border-[#C3FF32]/20 bg-[#C3FF32]/5">
-              <Zap size={12} /> {badge}
-            </div>
-          )}
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">{title}</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">{subtitle}</p>
         </div>

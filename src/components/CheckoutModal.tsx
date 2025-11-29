@@ -6,6 +6,7 @@ import { parseEther } from 'viem'
 import { avalancheFuji } from 'wagmi/chains'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { X, Wallet, CheckCircle2, Loader2, AlertCircle, ExternalLink } from 'lucide-react'
 
 interface CheckoutModalProps {
   open: boolean
@@ -140,53 +141,78 @@ export default function CheckoutModal({ open, onClose, redirectTo, onSuccess }: 
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-gray-900">Checkout</h2>
-          <button 
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
-          >
-            ✕
-          </button>
-        </div>
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-[#0E0E11] rounded-2xl border border-white/5 p-8 max-w-lg w-full mx-4 relative overflow-hidden group">
+        {/* Background glow */}
+        <div className="absolute -inset-4 bg-[#C3FF32]/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        
+        <div className="relative z-10">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-white">Checkout</h2>
+            <button 
+              onClick={onClose}
+              className="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/5"
+            >
+              <X size={20} />
+            </button>
+          </div>
 
-        <div className="mb-6">
-          <p className="text-3xl font-bold text-gray-900 mb-2">0.001 AVAX</p>
-          <p className="text-gray-600">Premium Subscription</p>
-        </div>
+          <div className="mb-8 bg-[#050505] border border-white/5 rounded-xl p-6 text-center">
+            <p className="text-3xl font-bold text-[#C3FF32] mb-2">0.001 AVAX</p>
+            <p className="text-base text-gray-400">Premium Subscription</p>
+          </div>
 
         {!isConnected ? (
-          <div className="space-y-2">
-            <p className="text-sm text-gray-600 mb-3">Connect your wallet to continue:</p>
-            <p className="text-xs text-blue-600 mb-2">💡 Make sure MetaMask extension is enabled</p>
-            {connectors.map((connector) => (
-              <button
-                key={connector.id}
-                onClick={() => connect({ connector })}
-                className="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-              >
-                Connect {connector.name}
-              </button>
-            ))}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 mb-4">
+              <Wallet className="text-[#C3FF32]" size={20} />
+              <p className="text-sm text-gray-300">Connect your wallet:</p>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              {connectors.map((connector) => (
+                <button
+                  key={connector.id}
+                  onClick={() => connect({ connector })}
+                  className="aspect-square bg-white/5 border border-white/10 rounded-xl hover:border-[#C3FF32]/50 hover:bg-white/10 transition-all flex items-center justify-center group relative overflow-hidden"
+                  title={connector.name}
+                >
+                  <div className="absolute inset-0 bg-[#C3FF32]/1 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  {connector.icon ? (
+                    <img 
+                      src={connector.icon} 
+                      alt={connector.name}
+                      className="w-10 h-10 object-contain relative z-10"
+                    />
+                  ) 
+                  : (
+                    <Wallet size={32} className="text-[#C3FF32] relative z-10" />
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
         ) : (
           <div className="space-y-4">
             {isWrongNetwork && (
-              <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                <p className="text-yellow-800 text-sm font-semibold">Wrong Network</p>
-                <p className="text-yellow-700 text-xs mt-1">Please switch to Avalanche Fuji</p>
+              <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
+                <p className="text-yellow-400 text-sm font-semibold flex items-center gap-2 mb-1">
+                  <AlertCircle size={16} />
+                  Wrong Network
+                </p>
+                <p className="text-yellow-300/80 text-xs">Please switch to Avalanche Fuji</p>
               </div>
             )}
 
-            <div className="text-xs bg-gray-50 p-3 rounded-lg border border-gray-200">
-              <p className="font-semibold text-gray-700 mb-1">Wallet: {connector?.name || 'Unknown'}</p>
-              <p className="text-gray-600">Address: {address?.slice(0, 6)}...{address?.slice(-4)}</p>
-              <p className="text-gray-600">Network: {chain?.name} (ID: {chain?.id})</p>
+            <div className="text-xs bg-white/5 border border-white/5 p-4 rounded-xl">
+              <p className="font-semibold text-white mb-2 flex items-center gap-2">
+                <Wallet size={14} className="text-[#C3FF32]" />
+                {connector?.name || 'Unknown'}
+              </p>
+              <p className="text-gray-400 font-mono mb-1">Address: {address?.slice(0, 6)}...{address?.slice(-4)}</p>
+              <p className="text-gray-400 mb-3">Network: {chain?.name} (ID: {chain?.id})</p>
               <button
                 onClick={() => disconnect()}
-                className="mt-2 text-red-600 hover:text-red-700 text-xs font-semibold"
+                className="text-red-400 hover:text-red-300 text-xs font-semibold transition-colors"
               >
                 Disconnect & Switch Wallet
               </button>
@@ -195,61 +221,92 @@ export default function CheckoutModal({ open, onClose, redirectTo, onSuccess }: 
             <button
               onClick={handlePay}
               disabled={isPending || isConfirming}
-              className="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="w-full px-6 py-4 bg-[#C3FF32] text-black rounded-lg hover:bg-[#b0e62e] transition-all font-bold disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(195,255,50,0.3)] disabled:shadow-none"
             >
-              {isWrongNetwork ? 'Switch to Fuji Network' : isPending ? 'Confirm in Wallet...' : isConfirming ? 'Processing...' : 'Pay 0.001 AVAX'}
+              {isPending || isConfirming ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  {isPending ? 'Confirm in Wallet...' : 'Processing...'}
+                </>
+              ) : isWrongNetwork ? (
+                'Switch to Fuji Network'
+              ) : (
+                <>
+                  Pay 0.001 AVAX
+                  <ExternalLink size={18} />
+                </>
+              )}
             </button>
 
             {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-red-700 text-sm font-semibold">Error</p>
-                <p className="text-red-600 text-xs mt-1">{error.message}</p>
+              <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                <p className="text-red-400 text-xs font-semibold flex items-center gap-1.5 mb-1">
+                  <AlertCircle size={14} />
+                  Error
+                </p>
+                <p className="text-red-300/80 text-[10px] mt-1">{error.message}</p>
               </div>
             )}
 
             {isSuccess && (
               <div className="space-y-2">
-                <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                  <p className="text-green-700 font-semibold">Transaction Confirmed!</p>
-                  <p className="text-green-600 text-sm mt-1">Tx: {hash?.slice(0, 10)}...</p>
+                <div className="p-3 bg-[#C3FF32]/10 border border-[#C3FF32]/20 rounded-lg">
+                  <p className="text-[#C3FF32] font-semibold flex items-center gap-1.5 mb-1 text-xs">
+                    <CheckCircle2 size={14} />
+                    Transaction Confirmed!
+                  </p>
+                  <p className="text-gray-400 text-[10px] mt-1 font-mono">Tx: {hash?.slice(0, 10)}...</p>
                 </div>
 
                 {isVerifying && (
-                  <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p className="text-blue-700 text-sm">Verifying payment on backend...</p>
+                  <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                    <p className="text-blue-400 text-xs flex items-center gap-1.5">
+                      <Loader2 size={14} className="animate-spin" />
+                      Verifying payment on backend...
+                    </p>
                   </div>
                 )}
 
                 {isVerified && (
                   <div className="space-y-2">
-                    <div className="p-3 bg-green-50 border border-green-300 rounded-lg">
-                      <p className="text-green-800 font-semibold text-sm">✓ Payment Verified & Subscription Created!</p>
+                    <div className="p-3 bg-[#C3FF32]/10 border border-[#C3FF32]/30 rounded-lg">
+                      <p className="text-[#C3FF32] font-semibold text-xs flex items-center gap-1.5">
+                        <CheckCircle2 size={14} />
+                        Payment Verified & Subscription Created!
+                      </p>
                     </div>
                     {hasAccess && redirectTo && (
-                      <div className="p-3 bg-blue-50 border border-blue-300 rounded-lg">
-                        <p className="text-blue-800 font-semibold text-sm">✓ Access Granted! Redirecting...</p>
+                      <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+                        <p className="text-blue-400 font-semibold text-xs flex items-center gap-1.5">
+                          <CheckCircle2 size={14} />
+                          Access Granted! Redirecting...
+                        </p>
                       </div>
                     )}
                   </div>
                 )}
 
                 {verificationError && (
-                  <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                    <p className="text-orange-800 text-sm font-semibold">Verification Warning</p>
-                    <p className="text-orange-700 text-xs mt-1">{verificationError}</p>
-                    <p className="text-orange-600 text-xs mt-1">Payment was sent but backend verification failed.</p>
+                  <div className="p-3 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+                    <p className="text-orange-400 text-xs font-semibold flex items-center gap-1.5 mb-1">
+                      <AlertCircle size={14} />
+                      Verification Warning
+                    </p>
+                    <p className="text-orange-300/80 text-[10px] mt-1">{verificationError}</p>
+                    <p className="text-orange-300/60 text-[10px] mt-1">Payment was sent but backend verification failed.</p>
                   </div>
                 )}
               </div>
             )}
 
             {hash && !isSuccess && (
-              <p className="text-sm text-gray-600 text-center">
+              <p className="text-xs text-gray-400 text-center font-mono">
                 Transaction submitted: {hash.slice(0, 10)}...
               </p>
             )}
           </div>
         )}
+        </div>
       </div>
     </div>
   )
