@@ -3,7 +3,12 @@
 import { useState } from 'react'
 import CheckoutModal from './CheckoutModal'
 
-export default function AvaxCheckout() {
+interface AvaxCheckoutProps {
+  redirectTo?: string
+  onSuccess?: () => void
+}
+
+export default function AvaxCheckout({ redirectTo, onSuccess }: AvaxCheckoutProps = {}) {
   const [modalOpen, setModalOpen] = useState(false)
 
   return (
@@ -18,6 +23,8 @@ export default function AvaxCheckout() {
       <CheckoutModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
+        redirectTo={redirectTo}
+        onSuccess={onSuccess}
       />
     </>
   )

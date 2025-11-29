@@ -5,13 +5,17 @@ import { paymentsAbi, paymentsAddress, merchantAddress } from '@/lib/contract'
 import { parseEther } from 'viem'
 import { avalancheFuji } from 'wagmi/chains'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface CheckoutModalProps {
   open: boolean
   onClose: () => void
+  redirectTo?: string
+  onSuccess?: () => void
 }
 
-export default function CheckoutModal({ open, onClose }: CheckoutModalProps) {
+export default function CheckoutModal({ open, onClose, redirectTo, onSuccess }: CheckoutModalProps) {
+  const router = useRouter()
   const { connectors, connect } = useConnect()
   const { isConnected, address, chain, connector } = useAccount()
   const { data: hash, writeContract, isPending, error } = useWriteContract()
@@ -22,6 +26,7 @@ export default function CheckoutModal({ open, onClose }: CheckoutModalProps) {
   const [isVerifying, setIsVerifying] = useState(false)
   const [verificationError, setVerificationError] = useState<string | null>(null)
   const [isVerified, setIsVerified] = useState(false)
+  const [hasAccess, setHasAccess] = useState(false)
 
   const isWrongNetwork = chain?.id !== avalancheFuji.id
 
@@ -65,6 +70,38 @@ export default function CheckoutModal({ open, onClose }: CheckoutModalProps) {
         console.log('Subscription created:', data.subscription)
       }
       setIsVerified(true)
+
+      if (data.subscription && address) {
+        console.log('Checking access after subscription creation...')
+        const accessResponse = await fetch('/api/access/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            wallet: address,
+            merchant: merchantAddress,
+          }),
+        })
+
+        const accessData = await accessResponse.json()
+        console.log('Access check result:', accessData)
+
+        if (accessData.access) {
+          setHasAccess(true)
+          
+          if (onSuccess) {
+            console.log('Calling onSuccess callback')
+            setTimeout(() => {
+              onSuccess()
+              onClose()
+            }, 2000)
+          } else if (redirectTo) {
+            setTimeout(() => {
+              console.log('Redirecting to:', redirectTo)
+              router.push(redirectTo)
+            }, 2000)
+          }
+        }
+      }
     } catch (err: any) {
       console.error('Verification error:', err)
       setVerificationError(err.message || 'Failed to verify payment')
@@ -184,8 +221,15 @@ export default function CheckoutModal({ open, onClose }: CheckoutModalProps) {
                 )}
 
                 {isVerified && (
-                  <div className="p-3 bg-green-50 border border-green-300 rounded-lg">
-                    <p className="text-green-800 font-semibold text-sm">✓ Payment Verified & Subscription Created!</p>
+                  <div className="space-y-2">
+                    <div className="p-3 bg-green-50 border border-green-300 rounded-lg">
+                      <p className="text-green-800 font-semibold text-sm">✓ Payment Verified & Subscription Created!</p>
+                    </div>
+                    {hasAccess && redirectTo && (
+                      <div className="p-3 bg-blue-50 border border-blue-300 rounded-lg">
+                        <p className="text-blue-800 font-semibold text-sm">✓ Access Granted! Redirecting...</p>
+                      </div>
+                    )}
                   </div>
                 )}
 
