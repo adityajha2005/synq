@@ -9,9 +9,16 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@metamask/sdk": "^0.33.1",
+    "@tanstack/react-query": "^5.90.11",
+    "@wagmi/connectors": "^7.0.2",
+    "@wagmi/core": "^3.0.0",
+    "@walletconnect/ethereum-provider": "^2.21.10",
     "next": "16.0.5",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "viem": "^2.40.3",
+    "wagmi": "^3.0.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
