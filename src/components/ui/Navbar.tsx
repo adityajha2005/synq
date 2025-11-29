@@ -48,7 +48,7 @@ export function Navbar({
   }
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 font-sans bg-black border-b border-white/10 ${scrolled ? 'py-2 shadow-lg shadow-black/20' : 'py-3'}`} style={{ fontFamily: 'var(--font-inter), system-ui, -apple-system, sans-serif' }}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 font-sans bg-black border-b border-white/10 ${scrolled ? 'py-2 shadow-lg shadow-black/20' : 'py-3'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center relative">
         <Link href="/" className="flex items-center gap-2">
           <Image
