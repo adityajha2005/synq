@@ -14,7 +14,6 @@ export async function GET(req: NextRequest) {
       )
     }
 
-    // Get merchant ID
     const { data: merchantData } = await supabase
       .from('merchants')
       .select('id')
@@ -29,7 +28,6 @@ export async function GET(req: NextRequest) {
       })
     }
 
-    // Fetch payments
     const { data: payments, error } = await supabase
       .from('payments')
       .select('*')
@@ -39,7 +37,6 @@ export async function GET(req: NextRequest) {
 
     if (error) throw error
 
-    // Calculate total revenue
     let totalRevenue = 0
     if (payments) {
       payments.forEach((payment: any) => {

@@ -3,7 +3,7 @@
 import { CheckoutButton } from "../../../sdk/ui/CheckoutButton"
 import { SubscriptionStatus } from "../../../sdk/ui/SubscriptionStatus"
 import { useAccount } from "wagmi"
-import { Navbar } from '@/components/landing'
+import { Navbar } from '@/components/ui'
 import { Code2, Package, CheckCircle2, AlertCircle } from 'lucide-react'
 
 export default function SDKDemoPage() {
@@ -14,7 +14,6 @@ export default function SDKDemoPage() {
       <Navbar />
       <main className="min-h-screen pt-32 pb-16 px-4">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#C3FF32]/20 bg-[#C3FF32]/5 text-[#C3FF32] text-xs font-mono mb-6">
               <Code2 size={12} />
@@ -24,12 +23,11 @@ export default function SDKDemoPage() {
               SDK Demo
             </h1>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Test and explore Avalanche Commerce SDK components with live examples
+              Test and explore SYNQ SDK components with live examples
             </p>
           </div>
 
           <div className="space-y-8">
-            {/* CheckoutButton Section */}
             <div className="bg-[#0E0E11] rounded-2xl border border-white/5 p-8 relative overflow-hidden group hover:border-[#C3FF32]/30 transition-all">
               <div className="absolute -inset-4 bg-[#C3FF32]/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative z-10">
@@ -58,7 +56,6 @@ export default function SDKDemoPage() {
               </div>
             </div>
 
-            {/* SubscriptionStatus Section */}
             <div className="bg-[#0E0E11] rounded-2xl border border-white/5 p-8 relative overflow-hidden group hover:border-[#C3FF32]/30 transition-all">
               <div className="absolute -inset-4 bg-[#C3FF32]/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative z-10">
@@ -90,7 +87,6 @@ export default function SDKDemoPage() {
               </div>
             </div>
 
-            {/* Code Example Section */}
             <div className="bg-[#0E0E11] rounded-2xl border border-white/5 p-8 relative overflow-hidden group hover:border-[#C3FF32]/30 transition-all">
               <div className="absolute -inset-4 bg-[#C3FF32]/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative z-10">
@@ -102,7 +98,7 @@ export default function SDKDemoPage() {
                 <div className="bg-[#050505] border border-white/5 rounded-xl p-6 mt-6 overflow-x-auto">
                   <pre className="text-sm text-gray-300 font-mono">
 {`// Import SDK components
-import { CheckoutButton, SubscriptionStatus } from 'avalanche-commerce-sdk'
+import { CheckoutButton, SubscriptionStatus } from 'synq-sdk'
 
 // Use in your app
 export default function MyPage() {
@@ -125,7 +121,6 @@ export default function MyPage() {
               </div>
             </div>
 
-            {/* Features Section */}
             <div className="bg-[#0E0E11] rounded-2xl border border-[#C3FF32]/20 p-8 relative overflow-hidden">
               <div className="absolute -inset-4 bg-[#C3FF32]/5 blur-2xl opacity-50"></div>
               <div className="relative z-10">

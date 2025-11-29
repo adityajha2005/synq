@@ -1,4 +1,4 @@
-# 📦 Avalanche Commerce SDK - Complete Guide
+# 📦 SYNQ SDK - Complete Guide
 
 ## 🎯 Overview
 
@@ -91,7 +91,7 @@ npm publish
 
 Then developers can:
 ```bash
-npm install avalanche-commerce-sdk
+npm install synq-sdk
 ```
 
 ---
@@ -371,7 +371,7 @@ npm publish
 
 Then in other apps:
 ```bash
-npm install avalanche-commerce-sdk
+npm install synq-sdk
 ```
 
 ```tsx

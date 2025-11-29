@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
-import { Navbar } from '@/components/landing'
+import { Navbar } from '@/components/ui'
 import { Loader2, AlertCircle, CheckCircle2, XCircle, Clock, Users } from 'lucide-react'
 
 interface Subscription {

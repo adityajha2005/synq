@@ -1,11 +1,11 @@
-# Avalanche Commerce SDK
+# SYNQ SDK
 
 TypeScript/React SDK for integrating Avalanche-based payments and subscriptions into your app.
 
 ## Installation
 
 ```bash
-npm install avalanche-commerce-sdk
+npm install synq-sdk
 ```
 
 Or use locally:

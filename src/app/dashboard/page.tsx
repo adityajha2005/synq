@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { useRouter } from 'next/navigation'
-import { Navbar } from '@/components/landing'
+import { Navbar } from '@/components/ui'
 import { 
   BarChart3, 
   Users, 
@@ -57,7 +57,6 @@ export default function DashboardPage() {
     try {
       setLoading(true)
       
-      // Fetch payments and subscriptions in parallel
       const [paymentsResponse, subsResponse] = await Promise.all([
         fetch(`/api/payments/list?merchant=${address}`),
         fetch(`/api/subscriptions/list?merchant=${address}`)
@@ -73,18 +72,15 @@ export default function DashboardPage() {
       let expiredSubscriptions = 0
       let totalSubscriptions = 0
       
-      // Process payments data
       if (paymentsResponse.ok && paymentsData) {
         console.log('Payments response:', paymentsData)
         totalRevenue = paymentsData.totalRevenue || 0
         totalPayments = paymentsData.count || 0
         
-        // Process chart data - group by date
         if (paymentsData.payments && paymentsData.payments.length > 0) {
           const dataMap = new Map<string, { revenue: number; count: number; timestamp: number }>()
           
           paymentsData.payments.forEach((payment: any) => {
-            // Handle timestamp - it's stored as string, convert to number
             let timestamp = payment.timestamp
             if (typeof timestamp === 'string') {
               timestamp = parseInt(timestamp)
@@ -94,7 +90,6 @@ export default function DashboardPage() {
               return
             }
             
-            // Timestamp is in seconds, convert to milliseconds for Date
             const date = new Date(timestamp * 1000)
             const dateKey = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
             
@@ -109,22 +104,20 @@ export default function DashboardPage() {
             dataMap.set(dateKey, {
               revenue: existing.revenue + revenue,
               count: existing.count + 1,
-              timestamp: timestamp // Keep original timestamp for sorting
+              timestamp: timestamp
             })
           })
           
-          // Convert to array and sort by timestamp
           const chartDataArray = Array.from(dataMap.entries())
             .map(([date, data]) => ({ date, ...data }))
             .sort((a, b) => a.timestamp - b.timestamp)
-            .slice(-7) // Last 7 days
-            .map(({ timestamp, ...rest }) => rest) // Remove timestamp from final data
+            .slice(-7)
+            .map(({ timestamp, ...rest }) => rest)
           
           setChartData(chartDataArray)
         }
       }
       
-      // Process subscriptions data
       if (subsResponse.ok && subsData.subscriptions) {
         const subscriptions = subsData.subscriptions
         activeSubscriptions = subscriptions.filter((s: any) => s.status === 'active').length
@@ -166,13 +159,11 @@ export default function DashboardPage() {
       <Navbar />
       <main className="min-h-screen pt-24 pb-16 px-4">
         <div className="max-w-7xl mx-auto">
-          {/* Background glow */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#C3FF32]/5 blur-[120px] rounded-full"></div>
           </div>
 
           <div className="relative z-10">
-            {/* Header */}
             <div className="mb-8">
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">Dashboard</h1>
               <p className="text-gray-400 text-lg">
@@ -183,9 +174,7 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            {/* Stats Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {/* Total Revenue Card */}
               <div className="bg-[#0E0E11] rounded-2xl border border-[#C3FF32]/20 p-6 relative overflow-hidden group hover:border-[#C3FF32]/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(195,255,50,0.3)]">
                 <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C3FF32]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
@@ -206,7 +195,6 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Active Subscriptions Card */}
               <div className="bg-[#0E0E11] rounded-2xl border border-[#C3FF32]/20 p-6 relative overflow-hidden group hover:border-[#C3FF32]/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(195,255,50,0.3)]">
                 <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C3FF32]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
@@ -227,7 +215,6 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Total Payments Card */}
               <div className="bg-[#0E0E11] rounded-2xl border border-[#C3FF32]/20 p-6 relative overflow-hidden group hover:border-[#C3FF32]/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(195,255,50,0.3)]">
                 <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C3FF32]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
@@ -249,9 +236,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* Navigation Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              {/* Analytics Card */}
               <div 
                 onClick={() => router.push('/dashboard/analytics')}
                 className="bg-[#0E0E11] rounded-2xl border border-[#C3FF32]/20 p-8 relative overflow-hidden group hover:border-[#C3FF32]/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(195,255,50,0.3)] cursor-pointer"
@@ -276,7 +261,6 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Subscriptions Card */}
               <div 
                 onClick={() => router.push('/dashboard/subscriptions')}
                 className="bg-[#0E0E11] rounded-2xl border border-[#C3FF32]/20 p-8 relative overflow-hidden group hover:border-[#C3FF32]/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(195,255,50,0.3)] cursor-pointer"
@@ -302,7 +286,6 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* Revenue Chart */}
             <div className="bg-[#0E0E11] rounded-2xl border border-white/5 p-8 relative overflow-hidden group hover:border-[#C3FF32]/30 transition-all">
               <div className="absolute -inset-4 bg-[#C3FF32]/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative z-10">
@@ -327,10 +310,8 @@ export default function DashboardPage() {
                   </div>
                 ) : (
                   <div className="bg-[#050505] border border-white/5 rounded-xl p-6">
-                    {/* Chart Container */}
                     <div className="relative h-64 mb-6">
                       <svg className="w-full h-full" viewBox="0 0 800 200" preserveAspectRatio="none">
-                        {/* Grid lines */}
                         <defs>
                           <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                             <stop offset="0%" stopColor="#C3FF32" stopOpacity="0.3" />
@@ -345,7 +326,6 @@ export default function DashboardPage() {
                           </filter>
                         </defs>
                         
-                        {/* Horizontal grid lines */}
                         {[0, 1, 2, 3, 4].map((i) => (
                           <line
                             key={i}
@@ -369,14 +349,12 @@ export default function DashboardPage() {
                           const chartHeight = height - padding * 2
                           const stepX = chartData.length > 1 ? chartWidth / (chartData.length - 1) : 0
                           
-                          // Generate points
                           const points = chartData.map((point, index) => {
                             const x = padding + (index * stepX)
                             const y = padding + chartHeight - ((point.revenue - minRevenue) / range) * chartHeight
                             return { x, y, ...point }
                           })
                           
-                          // Create area path
                           const areaPath = points.reduce((path, point, index) => {
                             if (index === 0) {
                               return `M ${point.x} ${padding + chartHeight} L ${point.x} ${point.y}`
@@ -384,7 +362,6 @@ export default function DashboardPage() {
                             return `${path} L ${point.x} ${point.y}`
                           }, '') + ` L ${points[points.length - 1].x} ${padding + chartHeight} Z`
                           
-                          // Create line path
                           const linePath = points.reduce((path, point, index) => {
                             if (index === 0) {
                               return `M ${point.x} ${point.y}`
@@ -394,13 +371,11 @@ export default function DashboardPage() {
                           
                           return (
                             <>
-                              {/* Area fill */}
                               <path
                                 d={areaPath}
                                 fill="url(#areaGradient)"
                               />
                               
-                              {/* Line */}
                               <path
                                 d={linePath}
                                 fill="none"
@@ -411,7 +386,6 @@ export default function DashboardPage() {
                                 filter="url(#glow)"
                               />
                               
-                              {/* Data points */}
                               {points.map((point, index) => (
                                 <g key={index}>
                                   <circle
@@ -431,7 +405,6 @@ export default function DashboardPage() {
                         })()}
                       </svg>
                       
-                      {/* X-axis labels */}
                       <div className="absolute bottom-0 left-0 right-0 flex justify-between px-2">
                         {chartData.map((point, index) => (
                           <div key={index} className="flex flex-col items-center">
@@ -442,7 +415,6 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     
-                    {/* Summary Stats */}
                     <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/5">
                       <div>
                         <p className="text-xs text-gray-400 mb-1">Total (7 days)</p>

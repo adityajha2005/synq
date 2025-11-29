@@ -3,7 +3,7 @@
 import AvaxCheckout from '@/components/AvaxCheckout'
 import { useWatchContractEvent } from 'wagmi'
 import { paymentsAbi, paymentsAddress } from '@/lib/contract'
-import { Navbar } from '@/components/landing'
+import { Navbar } from '@/components/ui'
 import { Zap, ArrowRight } from 'lucide-react'
 
 export default function CheckoutDemoPage() {
@@ -40,7 +40,7 @@ export default function CheckoutDemoPage() {
             </div> */}
 
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
-              Avalanche Commerce
+              SYNQ
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C3FF32] via-[#e2ff8d] to-white">
                 Checkout Demo

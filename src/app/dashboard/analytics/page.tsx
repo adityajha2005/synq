@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useAccount } from 'wagmi'
-import { Navbar } from '@/components/landing'
+import { Navbar } from '@/components/ui'
 import { FileText, RefreshCw, BarChart3, Loader2, Zap, AlertCircle, CheckCircle2 } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Loader2, CheckCircle2, ArrowRight, BarChart3, Key, BookOpen, HeadphonesIcon, RefreshCw, Wallet } from 'lucide-react'
 import AvaxCheckout from '@/components/AvaxCheckout'
 import { merchantAddress } from '@/lib/contract'
-import { Navbar } from '@/components/landing'
+import { Navbar } from '@/components/ui'
 
 export default function ProtectedPage() {
   const { address, isConnected } = useAccount()
