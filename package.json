@@ -17,6 +17,7 @@
     "@wagmi/connectors": "^7.0.2",
     "@wagmi/core": "^3.0.0",
     "@walletconnect/ethereum-provider": "^2.21.10",
+    "lucide-react": "^0.555.0",
     "next": "16.0.5",
     "react": "19.2.0",
     "react-dom": "19.2.0",
