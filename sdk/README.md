@@ -1,4 +1,4 @@
-# SYNQ SDK
+# synq pay SDK
 
 TypeScript/React SDK for integrating Avalanche-based payments and subscriptions into your app.
 
@@ -19,7 +19,7 @@ import { CheckoutButton } from '../sdk/ui/CheckoutButton'
 ### 1. Add Checkout Button
 
 ```tsx
-import { CheckoutButton } from 'avalanche-commerce-sdk'
+import { CheckoutButton } from 'synq-sdk'
 
 export default function Page() {
   return (
@@ -35,7 +35,7 @@ export default function Page() {
 ### 2. Show Subscription Status
 
 ```tsx
-import { SubscriptionStatus } from 'avalanche-commerce-sdk'
+import { SubscriptionStatus } from 'synq-sdk'
 
 export default function Dashboard({ wallet }: { wallet: string }) {
   return (
@@ -50,7 +50,7 @@ export default function Dashboard({ wallet }: { wallet: string }) {
 ### 3. Verify Payments (Backend)
 
 ```tsx
-import { verifyPayment } from 'avalanche-commerce-sdk'
+import { verifyPayment } from 'synq-sdk'
 
 const result = await verifyPayment(
   txHash,
@@ -70,7 +70,7 @@ if (result.verified) {
 ### 4. Check Access
 
 ```tsx
-import { checkAccess } from 'avalanche-commerce-sdk'
+import { checkAccess } from 'synq-sdk'
 
 const { access } = await checkAccess(
   walletAddress,
@@ -143,7 +143,7 @@ import type {
   Plan,
   Subscription,
   AccessResponse
-} from 'avalanche-commerce-sdk'
+} from 'synq-sdk'
 ```
 
 ## Building

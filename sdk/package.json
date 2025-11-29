@@ -1,7 +1,7 @@
 {
   "name": "synq-sdk",
   "version": "0.1.0",
-  "description": "SDK for SYNQ - subscriptions, payments, and access control on Avalanche",
+  "description": "SDK for synq pay - subscriptions, payments, and access control on Avalanche",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",

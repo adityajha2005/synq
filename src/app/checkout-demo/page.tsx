@@ -40,7 +40,7 @@ export default function CheckoutDemoPage() {
             </div> */}
 
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
-              SYNQ
+              synq pay
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C3FF32] via-[#e2ff8d] to-white">
                 Checkout Demo

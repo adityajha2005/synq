@@ -1,4 +1,4 @@
-# 📦 SYNQ SDK - Complete Guide
+# 📦 synq pay SDK - Complete Guide
 
 ## 🎯 Overview
 
@@ -375,7 +375,7 @@ npm install synq-sdk
 ```
 
 ```tsx
-import { CheckoutButton } from 'avalanche-commerce-sdk'
+import { CheckoutButton } from 'synq-sdk'
 ```
 
 ---

@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation'
 import { Menu, X, Github } from 'lucide-react'
 
 interface NavbarProps {
-  // logoText?: string
   links?: Array<{ label: string; href: string }>
   ctaText?: string
   ctaHref?: string
@@ -15,7 +14,6 @@ interface NavbarProps {
 }
 
 export function Navbar({
-  // logoText = "SYNQ",
   links = [
     { label: 'Features', href: '#features' },
     { label: 'Dashboard', href: '/dashboard' },
@@ -50,24 +48,20 @@ export function Navbar({
   }
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#0A0A0C]/95 backdrop-blur-xl border-b border-white/10 py-3 shadow-lg shadow-black/20' : 'bg-transparent border-b border-transparent py-5'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-3 group relative">
-          <div className="relative">
-            <div className="absolute inset-0 bg-[#C3FF32]/20 blur-md opacity-0  transition-opacity duration-300 rounded-lg"></div>
-            <Image
-              src="/Gemini_Generated_Image_ae2llaae2llaae2l.png"
-              alt="SYNQ Logo"
-              width={100}
-              height={100}
-              className="relative z-10 group-hover:scale-105 transition-transform duration-300"
-              priority
-            />
-          </div>
-          {/* <span className="text-white font-bold text-lg tracking-tight group-hover:text-[#C3FF32] transition-colors duration-300">{logoText}</span> */}
+    <nav className={`fixed w-full z-50 transition-all duration-300 font-sans bg-black border-b border-white/10 ${scrolled ? 'py-2 shadow-lg shadow-black/20' : 'py-3'}`} style={{ fontFamily: 'var(--font-inter), system-ui, -apple-system, sans-serif' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center relative">
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/Gemini_Generated_Image_ae2llaae2llaae2l.png"
+            alt="synq pay Logo"
+            width={100}
+            height={100}
+            className="relative z-10"
+            priority
+          />
         </Link>
 
-        <div className="hidden md:flex items-center space-x-1">
+        <div className="hidden md:flex items-center space-x-2 absolute left-1/2 -translate-x-1/2">
           {links.map((link) => {
             const active = isActive(link.href)
             const href = link.href.startsWith('#') ? `/${link.href}` : link.href
@@ -76,7 +70,7 @@ export function Navbar({
               <Link
                 key={link.label}
                 href={href}
-                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`relative px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
                   active
                     ? 'text-[#C3FF32] bg-[#C3FF32]/10'
                     : 'text-gray-400 hover:text-[#C3FF32] hover:bg-white/5'
@@ -91,14 +85,14 @@ export function Navbar({
           })}
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2">
           <a 
             href={githubUrl} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="text-gray-300 border border-white/10 px-4 py-2 rounded-lg text-sm hover:border-[#C3FF32]/30 hover:text-[#C3FF32] hover:bg-white/5 transition-all duration-200 flex items-center gap-2 group"
+            className="text-gray-300 border border-white/10 px-4 py-2 rounded-lg text-sm font-semibold hover:border-[#C3FF32]/30 hover:text-[#C3FF32] hover:bg-white/5 transition-all duration-200 flex items-center gap-2 group"
           >
-            <Github size={16} className="group-hover:scale-110 transition-transform" /> 
+            <Github size={14} className="group-hover:scale-110 transition-transform" /> 
             <span>GitHub</span>
           </a>
           <Link 
@@ -119,7 +113,7 @@ export function Navbar({
       </div>
 
       <div 
-        className={`md:hidden absolute top-full left-0 w-full bg-[#0A0A0C]/98 backdrop-blur-xl border-b border-white/10 overflow-hidden transition-all duration-300 ${
+        className={`md:hidden absolute top-full left-0 w-full bg-black border-b border-white/10 overflow-hidden transition-all duration-300 ${
           isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
@@ -133,7 +127,7 @@ export function Navbar({
                 key={link.label}
                 href={href}
                 onClick={() => setIsOpen(false)}
-                className={`px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
+                className={`px-4 py-3 rounded-lg text-base font-semibold transition-all duration-200 ${
                   active
                     ? 'text-[#C3FF32] bg-[#C3FF32]/10'
                     : 'text-gray-300 hover:text-[#C3FF32] hover:bg-white/5'
@@ -149,7 +143,7 @@ export function Navbar({
               target="_blank" 
               rel="noopener noreferrer" 
               onClick={() => setIsOpen(false)}
-              className="text-white border border-white/10 py-3 rounded-lg flex items-center justify-center gap-2 hover:border-[#C3FF32]/30 hover:text-[#C3FF32] transition-all"
+              className="text-white border border-white/10 py-3 rounded-lg flex items-center justify-center gap-2 hover:border-[#C3FF32]/30 hover:text-[#C3FF32] transition-all font-semibold"
             >
               <Github size={18} /> GitHub
             </a>

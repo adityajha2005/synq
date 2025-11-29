@@ -23,7 +23,7 @@ const defaultLinks: FooterLink[] = [
 ]
 
 export function Footer({
-  logoText = "SYNQ",
+  logoText = "synq pay",
   tagline = "Built on Avalanche. Powered by AI.",
   links = defaultLinks
 }: FooterProps) {

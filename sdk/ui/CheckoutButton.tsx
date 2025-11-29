@@ -33,7 +33,7 @@ export function CheckoutButton({
       onClick={openCheckout}
       className={
         className ||
-        "px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-semibold"
+        "px-6 py-3 bg-[#C3FF32] text-black rounded-lg font-bold text-sm tracking-wide hover:bg-[#b0e62e] transition-all transform hover:-translate-y-0.5 shadow-[0_0_20px_rgba(195,255,50,0.3)] hover:shadow-[0_0_25px_rgba(195,255,50,0.4)] active:scale-[0.98]"
       }
     >
       {label}
