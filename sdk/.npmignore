@@ -1,0 +1,21 @@
+# Source files
+*.ts
+*.tsx
+!*.d.ts
+
+# Config files
+tsconfig.json
+*.config.js
+*.config.ts
+
+# Development files
+node_modules/
+.git/
+.gitignore
+.DS_Store
+*.log
+
+# Only publish dist and README
+!dist/
+!README.md
+

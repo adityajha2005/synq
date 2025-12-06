@@ -5,17 +5,37 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "avalanche",
     "web3",
     "payments",
     "subscriptions",
-    "commerce"
+    "commerce",
+    "blockchain",
+    "crypto",
+    "avax",
+    "synqpay"
   ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adityajha2005/synq.git",
+    "directory": "sdk"
+  },
+  "homepage": "https://github.com/adityajha2005/synq#readme",
+  "bugs": {
+    "url": "https://github.com/adityajha2005/synq/issues"
+  },
   "dependencies": {},
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
